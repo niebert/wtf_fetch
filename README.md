@@ -57,12 +57,7 @@ parsoid(wikiText) -> [headless/pretend-DOM] -> screen-scraping
 ```
 which is fine,
 
-but getting structured data this way (say, ***sentences*** or ***infobox values***), is still a complex + weird process. Arguably, you're not  any closer than you were with wikitext.
-This library has ***lovingly ❤️*** borrowed a lot of code and data from the parsoid project, and thanks its contributors.
-
-### Full data-dumps:
-wtf_wikipedia was built to work with [dumpster-dive](https://github.com/spencermountain/dumpster-dive),
-which lets you parse a whole wikipedia dump on a laptop in a couple hours. It's definitely the way to go, instead of fetching many pages off the api.
+but getting structured data out of the Wiki source go ahead with Spencer Kelly library [wtf_wikipedia](https://www.github.com/spencermountain/wtf_wikipedia)
 
 # API
 * **wtf_fetch.getPage(title, [lang], [domain], [options], [callback])**
@@ -78,18 +73,22 @@ A hash with the content
 }
 ```
 
+## Language and Domainname
+You can retrieve the Wiki markdown from different MediaWiki products of the WikiFoundation. The domain name includes the Wiki product (e.g. Wikipedia or Wikiversity) and a language. The WikiID encoded the language and the domain determines the API that is called for fetching the source Wiki. The following WikiIDs are referring to the following domain name.   
+* Language: `en` Domain: `wikipedia`:
+* Language: `de` Domain: `wikipedia`: https://en.wikipedia.org
+* Language: `en` Domain: `wikibooks`: https://en.wikibooks.org',
+* Language: `en` Domain: `wikinews`: https://en.wikinews.org',
+* Language: `en` Domain: `wikiquote`: https://en.wikiquote.org',
+* Language: `en` Domain: `wikisource`: https://en.wikisource.org',
+* Language: `en` Domain: `wikiversity`: https://en.wikiversity.org',
+* Language: `en` Domain: `wikivoyage`: https://en.wikivoyage.org'
+
+
+
 ## Examples
 
-### **wtf(wikiText)**
-flip your wikimedia markup into a `Document` object
-
-```javascript
-import wtf from 'wtf_wikipedia'
-wtf("==In Popular Culture==\n*harry potter's wand\n* the simpsons fence");
-// Document {plaintext(), html(), latex()...}
-```
-
-### **wtf.fetch(title, [lang_or_wikiid], [options], [callback])**
+### **wtf_fetch.getPage(title, [lang], [domain] [options], [callback])**
 retrieves raw contents of a mediawiki article from the wikipedia action API.
 
 This method supports the **errback** callback form, or returns a [Promise](https://spring.io/understanding/javascript-promises) if one is missing.
@@ -97,7 +96,7 @@ This method supports the **errback** callback form, or returns a [Promise](https
 to call non-english wikipedia apis, add [it's language-name](http://en.wikipedia.org/w/api.php?action=sitematrix&format=json) as the second parameter
 
 ```javascript
-wtf.fetch('Toronto', 'de', function(err, doc) {
+wtf_fetch.getPage('Toronto', 'de', 'wikipedia', function(err, doc) {
   doc.plaintext();
   //Toronto ist mit 2,6 Millionen Einwohnern..
 });
@@ -105,50 +104,21 @@ wtf.fetch('Toronto', 'de', function(err, doc) {
 you may also pass the wikipedia page id as parameter instead of the page title:
 
 ```javascript
-wtf.fetch(64646, 'de').then(console.log).catch(console.log)
+wtf_fetch.getPage(64646, 'de', 'wikipedia').then(console.log).catch(console.log)
 ```
 the fetch method follows redirects.
-
-### **doc.plaintext()**
-returns only nice text of the article
-```js
-var wiki =
-  "[[Greater_Boston|Boston]]'s [[Fenway_Park|baseball field]] has a {{convert|37|ft}} wall.<ref>{{cite web|blah}}</ref>";
-var text = wtf(wiki).plaintext();
-//"Boston's baseball field has a 37ft wall."
-```
-<!--
-## **.custom({})**
-
-if you're trying to parse a weird template, or an obscure wiki syntax somewhere, this library supports a customization
-step, where you can pass-in random parsers to run, before your result is generated.
-
-```js
-var str = `{{myTempl|cool data!}} Whistling is a sport in some countries...`;
-wtf.custom({
-  mine: str => {
-    let m = str.match(/^\{\{myTempl\|(.+?)\}\}$/);
-    if (m) {
-      return m[1];
-    }
-  }
-});
-wtf.parse(str);
-//{title:'Whistling', custom: {mine:['cool data!']} }
-```
-
-this way, you can extend the library with your own regexes, and all that. -->
 
 ## **CLI**
 if you're scripting this from the shell, or from another language, install with a `-g`, and then run:
 
 ```shell
-$ wtf_wikipedia George Clooney --plaintext
+$ wtf_fetch George Clooney --wiki
 # George Timothy Clooney (born May 6, 1961) is an American actor ...
 
-$ wtf_wikipedia Toronto Blue Jays --json
+$ wtf_fetch Toronto Blue Jays - json
 # {text:[...], infobox:{}, categories:[...], images:[] }
 ```
+Command Line Interface was not implement so far.
 
 ### Good practice:
 The wikipedia api is [pretty welcoming](https://www.mediawiki.org/wiki/API:Etiquette#Request_limit) though recommends three things, if you're going to hit it heavily -
@@ -156,11 +126,11 @@ The wikipedia api is [pretty welcoming](https://www.mediawiki.org/wiki/API:Etiqu
 * 2️⃣ bundle multiple pages into one request as an array
 * 3️⃣ run it serially, or at least, [slowly](https://www.npmjs.com/package/slow).
 ```js
-wtf.fetch(['Royal Cinema', 'Aldous Huxley'], 'en', {
+wtf_fetch.getPage(['Royal Cinema', 'Aldous Huxley'], 'en', 'wikipedia',{
   'Api-User-Agent': 'spencermountain@gmail.com'
 }).then((docList) => {
-  let allLinks = docList.map(doc => doc.links());
-  console.log(allLinks);
+  let allDocs = docList.map(doc => doc.wiki);
+  console.log(allDocs);
 });
 ```
 
