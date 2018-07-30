@@ -1,0 +1,59 @@
+{
+  "name": "wtf_fetch",
+  "description": "Fetch Wiki markdown from MediaWiki",
+  "version": "1.0.0",
+  "author": "Based on Work of Spencer Kelly <spencermountain@gmail.com> ",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/niebert/wtf_fetch.git"
+  },
+  "main": "./src/index.js",
+  "browser": "./builds/wtf_fetch.min.js",
+  "unpkg": "./builds/wtf_fetch.min.js",
+  "scripts": {
+    "start": "node ./scripts/demo.js",
+    "test": "node ./scripts/test.js",
+    "postpublish": "node ./scripts/coverage.js",
+    "coverage": "node ./scripts/coverage.js",
+    "testb": "TESTENV=prod node ./scripts/test.js",
+    "watch": "amble ./scratch.js",
+    "build": "node ./scripts/build.js"
+  },
+  "bin": {
+    "wtf_wikipedia": "./bin/wtf.js"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "files": [
+    "builds",
+    "api",
+    "src",
+    "bin"
+  ],
+  "keywords": [
+    "wikipedia",
+    "wikimedia",
+    "wikipedia markup",
+    "wikiscript"
+  ],
+  "dependencies": {
+    "cross-fetch": "^2.1.0",
+    "jshashes": "1.0.7"
+  },
+  "devDependencies": {
+    "amble": "0.0.6",
+    "babel-cli": "6.26.0",
+    "babel-preset-env": "1.6.1",
+    "babelify": "8.0.0",
+    "browserify": "16.2.0",
+    "codacy-coverage": "2.1.1",
+    "derequire": "2.0.6",
+    "nyc": "11.7.1",
+    "shelljs": "0.8.1",
+    "tap-dancer": "0.0.2",
+    "tape": "4.9.0",
+    "uglify-js": "3.3.22"
+  },
+  "license": "MIT"
+}
