@@ -76,7 +76,9 @@ A hash with the content
 ## Language and Domainname
 You can retrieve the Wiki markdown from different MediaWiki products of the WikiFoundation. The domain name includes the Wiki product (e.g. Wikipedia or Wikiversity) and a language. The WikiID encoded the language and the domain determines the API that is called for fetching the source Wiki. The following WikiIDs are referring to the following domain name.   
 * Language: `en` Domain: `wikipedia`:
-* Language: `de` Domain: `wikipedia`: https://en.wikipedia.org
+https://en.wikipedia.org
+* Language: `de` Domain: `wikipedia`:  https://de.wikipedia.org
+* Language: `fr` Domain: `wikipedia`:  https://fr.wikipedia.org
 * Language: `en` Domain: `wikibooks`: https://en.wikibooks.org',
 * Language: `en` Domain: `wikinews`: https://en.wikinews.org',
 * Language: `en` Domain: `wikiquote`: https://en.wikiquote.org',
