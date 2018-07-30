@@ -15,12 +15,12 @@ This could be documented in the `README.md` as developer recommendation and help
 
 ## Installation
 
-<kbd>npm install wtf_wikipedia</kbd>
+<kbd>npm install wtf_fetch</kbd>
 
 ```javascript
-var wtf = require('wtf_fetch');
+var wtf_fetch = require('wtf_fetch');
 
-wtf.fetch('Swarm Intelligence', 'en','wikipedia' function(err, doc) {
+wtf_fetch.getPage('Swarm Intelligence', 'en','wikipedia' function(err, doc) {
   // doc contains the download
   console.log(doc);
 });
@@ -30,7 +30,7 @@ wtf.fetch('Swarm Intelligence', 'en','wikipedia' function(err, doc) {
 <script src="https://unpkg.com/wtf_fetch@latest/builds/wtf_fetch.min.js"></script>
 <script>
   //(follows redirect)
-  wtf.fetch('Water', 'en','wikiversity' function(err, doc) {
+  wtf_fetch.getPage('Water', 'en','wikiversity' function(err, doc) {
     // doc contains the download
     console.log(doc);
   });
@@ -39,13 +39,13 @@ wtf.fetch('Swarm Intelligence', 'en','wikipedia' function(err, doc) {
 
 # What it does:
 * Downloads Wiki markup source for an article from a MediaWiki of the Wiki Foundation
-* Parse **infoboxes** into a formatted key-value object
 * Allows different MediaWiki source, e.g. Wikipedia, Wikiversity, Wikivoyage, ...
 
 ## But what about...
 
-### Wiky.js
-[wiky.js] is a simple Wiki to HTML converter you can start with, to learn about parsing a source document in the wiki
+
+### wiky.js - wiki2html.js
+[wiky.js](https://github.com/tanin47/wiky.js) [wiki2html](https://github.com/brechtbilliet/wiki2html) are simple libraries that convert sources from a MediaWiki to HTML. With these converters you can start with, to learn about parsing a wiki source document downloaded from a MediaWiki.
 
 ### Parsoid:
 Wikimedia's [Parsoid javascript parser](https://www.mediawiki.org/wiki/Parsoid) is the official wikiscript parser. It
@@ -69,36 +69,14 @@ which lets you parse a whole wikipedia dump on a laptop in a couple hours. It's 
 
 ### outputs:
 A hash with the content
-
-### Document methods:
-* **doc.isRedirect()** - *boolean*
-* **doc.isDisambiguation()** - *boolean*
-* **doc.categories()**
-* **doc.sections()**
-* **doc.sentences()**
-* **doc.images()**
-* **doc.links()**
-* **doc.tables()**
-* **doc.citations()**
-* **doc.infoboxes()**
-* **doc.coordinates()**
-
-### Section methods:
-(a section is any content between **==these kind==** of headers)
-* **sec.indentation()**
-* **sec.sentences()**
-* **sec.links()**
-* **sec.tables()**
-* **sec.templates()**
-* **sec.lists()**
-* **sec.interwiki()**
-* **sec.images()**
-* **sec.index()**
-* **sec.nextSibling()**
-* **sec.lastSibling()**
-* **sec.children()**
-* **sec.parent()**
-* **sec.remove()**
+```json
+{
+  "wiki": "This is the source as wiki markdown",
+  "options":{
+    "pageid"
+  }
+}
+```
 
 ## Examples
 
