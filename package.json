@@ -20,7 +20,7 @@
     "build": "node ./scripts/build.js"
   },
   "bin": {
-    "wtf_wikipedia": "./bin/wtf.js"
+    "wtf_fetch": "./bin/wtf_fetch.js"
   },
   "engines": {
     "node": ">=6.0.0"

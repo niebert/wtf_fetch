@@ -4,6 +4,21 @@
 
 `wtf_wikipedia` turns wikipedia's markup language into `JSON`, so extracting the content of a MediaWiki source as JSON data by parsing the wiki markup.
 
+## Demo HTML5-Application of `wtf_fetch`
+The following [wtf_fetch-demo](https://niebert.github.io/wtf_fetch) is HTML-page, that imports the library `wtf_fetch.js` and
+* uses HTML-form elements to determine the Wikipedia article and the domain from which the article should be download.
+* Provides a `Display Source` button to show the current source file in the MediaWiki of Wikiversity or Wikipedia.
+* The download appends a source info at very end of the downloaded Wiki source, to create a reference in the text (like a citation - see function `append_source_info()`)
+:: <font size="+2">[Demo wtf_fetch](https://niebert.github.io/wtf_fetch)</font>
+
+## See also
+The following repositories are related to `wtf_fetch`:  
+* [Wikipedia2Wikiversity](https://niebert.github.io/Wikipedia2Wikiversity) that uses `wtf_fetch` to download Wikipedia sources and convert the links for application in Wikiversity.
+* [`wtf_wikipedia`](https://github.com/spencermountain/wtf_wikipedia/) is the source repository developed by Spencer Kelly, who created that great library for Wikipedia article processing.
+* [Wiki2Reveal](https://niebert.github.io/Wiki2Reveal) that uses `wtf_fetch` and `wtf_wikipedia` to download Wikipedia sources and convert the wiki sources "on-the-fly" into a RevealJS presentation.
+
+
+## Decomposition of `wtf_wikipedia` in submodules
 If you consider the source of `wtf_wikipedia` you can identify 3 major step:
 * `wtf_fetch` retrieving the wiki markup source from the MediaWiki API,  i.e. https://www.wikipedia.org, https://www.wikiversity.org, https://www.wikivoyage.org, ...
 * `wtf_parse`, that parses wiki source into a `Document` object (Abstract Syntax Tree)  
@@ -22,7 +37,7 @@ var wtf_fetch = require('wtf_fetch');
 
 wtf_fetch.getPage('Swarm Intelligence', 'en','wikipedia' function(err, doc) {
   // doc contains the download
-  console.log(doc);
+  console.log(doc.wiki);
 });
 ```
 ***on the client-side:***
@@ -32,7 +47,7 @@ wtf_fetch.getPage('Swarm Intelligence', 'en','wikipedia' function(err, doc) {
   //(follows redirect)
   wtf_fetch.getPage('Water', 'en','wikiversity' function(err, doc) {
     // doc contains the download
-    console.log(doc);
+    console.log(doc.wiki);
   });
 </script>
 ```
@@ -136,12 +151,48 @@ wtf_fetch.getPage(['Royal Cinema', 'Aldous Huxley'], 'en', 'wikipedia',{
 });
 ```
 
+## Create Office Documents
+`wtf_fetch` is just the first step in creating other formats directly from the Wikipedia source by "on-the-fly" conversion after downloading the Wiki source e.g. from Wikipedia.
+
+Creating an Office document is just one example of an output file. ODT-output is currently (2018/11/04) not part of `wtf_wikipedia` but you may want to play around with the `wtf_fetch` or `wtf_wikipedia` to parse the Wiki source and convert the file in your browser into an Office document. The following source will support a bit in creating the Office documents.
+
+### PanDoc and ODF Editor
+If you try [PanDoc document conversion](https://pandoc.org/try) the key to generate Office documents is the export format ODF.
+[LibreOffice](https://en.wikipedia.org/wiki/LibreOffice) can load and save even the [OpenDocument Format](http://opendocumentformat.org/) and LibreOffice can load and save MICR0S0FT Office formats. So exporting to Open Document Format will be good option to start with in `wtf_wikipedia`. The following description are a summary of aspects that support developers in bringing the Office export format e.g. to web-based environment like the [ODF-Editor](http://webodf.org/demos/).
+OpenDocument Format provides a comprehensive way forward for `wtf_wikipedia` to exchange documents from a `MediaWiki` source text reliably and effortlessly to different formats, products and devices. Regarding the different Wikis of the [Wiki Foundation](https://en.wikipedia.org/wiki/Wikimedia_Foundation) as a [Content Sink](https://en.wikiversity.org/wiki/Educational_Content_Sink) e.g. the educational content in [Wikiversity](https://en.wikiversity.org) is no longer restricted to a single export format (like PDF) open ups access to other specific editors, products or vendors for all your needs. With `wtf_wikipedia` and an ODF export format the users have the opportunity to choose the 'best fit' application of the Wiki content. This section focuses on Office products.
+
+### Open Document Format ODT
+Some important information to support Office Documents in the future
+* see [WebODF](http://webodf.org/) how to [edit ODF documents on the web or display slides](http://webodf.org/demos/). Current limitation of WebODF is, that does not render mathematical expressions, but alteration in [WebODF editor](http://webodf.org/demos/) does not remove the mathematical expressions from the ODF file (state 2018/04/07). WebODF does not render the mathematical expressions but this may be solved in the WebODF-Editor by using [MathJax](https://www.mathjax.org/) or [KaTeX](https://khan.github.io/KaTeX/) in the future.
+* The `ODT`-Format is the default export format of LibreOffice/OpenOffice. Supporting the [Open Community Approach](https://en.wikiversity.org/wiki/Open_Community_Approach) OpenSource office products are used to avoid commercial dependencies for using generated Office products.
+  * The `ODT`-Format of LibreOffice is basically a [ZIP-File](https://en.wikipedia.org/wiki/Zip_(file_format)).
+  * Unzip shows the folder structure within the ZIP-format. Create a subdirectory e.g.  with the name `zipout/`  and call `unzip mytext.odt -d zipout` (Linux, MacOSX).
+  * The main text content is stored in `content.xml` as the main file for defining the content of Office document
+  * Remark: Zipping the folder content again will create a parsing error when you load the zipped office document again in `LibreOffice`. This may be caused by an inappropriate order in the generated ZIP-file. The file `mimetype` [must be the first file in the ZIP-archive](https://crcok.wordpress.com/2014/10/25/unzip-and-zip-openoffice-org-odt-files/).
+  * The best way to generate ODT-files is to generate an ODT-template `mytemplate.odt` with LibreOffice and all the styles you want to apply for the document and place a marker at specific content areas, where you want to replace the cross-compiled content with `wtf_wikipedia` in `content.xml`. The file  `content.xml` contains the text and can be updated in ODT-ZIP-file. If you want to have a MlCR0S0FT 0ffice output, just save the ODT-file in LibreOffice as Word-file. Also marker replacement is possible in ODF-files (see also [WebODF demos](http://webodf.org/demos/).
+  * Image must be downloaded from the MediaWiki (e.g. with an NPM equivalent of `wget` for fetching the image, audio or video) and add the file to the folder structure in the ZIP. Create a ODT-file with LibreOffice with an image and unzip the ODT-file to learn about way how ODT stores the image in the ODT zip-file.
+* [JSZip](https://stuk.github.io/jszip/): JSZip can be used to update and add certain files in a given ODT template (e.g. `mytemplate.odt`). Handling ZIP-files in a cross-compilation WebApp with `wtf_wikipedia` that runs in your browser and generates an editor environment for the cross-compiled Wiki source text (like the [WebODF editor](http://www.webodf.org/demo/ci/wodotexteditor-0.5.9/localeditor.html)). The updating the ODT template as ZIP-file can be handled with [JSZip](https://stuk.github.io/jszip/) by replacing the `content.xml` in a ZIP-archive. `content.xml` can be generated with `wtf_wikipedia` when the `odf`-export format is added to `/src/output/odf` (ToDo: Please create a pull request if you have done that).
+* **LibreOffice Export:** Loading ODT-files in [LibreOffice](https://en.wikipedia.org/wiki/LibreOffice) allows to export the ODT-Format to
+  * Office documents `doc`- and `docx`-format,  
+  * Text files (`.txt`),
+  * HTML files (`.html`),
+  * Rich Text files (`.rtf`),
+  * PDF files (`.pdf`) and even
+  * PNG files (`.png`).
+* Planing of the ODT support can be down in this README and collaborative implementation can be organized with Pull Requests PR.
+* Helpful Libraries: [node-odt](https://www.npmjs.com/package/node-odt), [odt](https://www.npmjs.com/package/odt)
+
+### Word Export with Javascript Libraries
+* `wtf_wikipedia` supports HTML export,
+* the library `html-docx-js` supports [cross-compilation of HTML into docx-format](https://www.npmjs.com/package/html-docx-js)
+
+
 # Contributing
-projects like these are only done with many-hands, and I try to be a friendly and easy maintainer. (promise!)
+projects like these are only done with many-hands, please consider contributing to [wtf_wikipedia](https://github.com/spencermountain/wtf_wikipedia)
 
-[Join in!](./contributing.md)
+[Join in!](https://github.com/spencermountain/wtf_wikipedia/contributing.md)
 
-Thank you to the [cross-fetch](https://github.com/lquixada/cross-fetch) and [jshashes](https://github.com/h2non/jshashes) libraries.
+Thank you to the developers of  [cross-fetch](https://github.com/lquixada/cross-fetch) and [jshashes](https://github.com/h2non/jshashes) libraries and especially to Spencer Kelly for contributing [wtf_wikipedia](https://github.com/spencermountain/wtf_wikipedia) to the OpenSource community.
 
 See also:
 * [instaview](https://en.wikipedia.org/wiki/User:Pilaf/InstaView)

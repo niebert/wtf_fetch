@@ -9,7 +9,12 @@ var uglify = './node_modules/.bin/uglifyjs';
 var pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
 //final build locations
-var banner = '/* wtf_fetch v' + pkg.version + '\n   github.com/niebert/wtf_fetch\n   MIT\n*/\n';
+var banner = '/* wtf_fetch v' + pkg.version;
+banner += '\n   github.com/niebert/wtf_fetch\n';
+banner += '\n   '+pkg.description;
+banner += '\n   based on work of Spencer Kelly github.com/spencermountain/wtf_wikipedia';
+banner += '\n   designed as submodule of wtf_wikipedia - decomposition into subtasks';
+banner += '\n   Licence: MIT\n*/\n';
 var uncompressed = './builds/wtf_fetch.js';
 var compressed = './builds/wtf_fetch.min.js';
 
