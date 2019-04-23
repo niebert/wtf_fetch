@@ -1,4 +1,4 @@
-/* wtf_fetch v1.8.0
+/* wtf_fetch v1.9.0
    github.com/niebert/wtf_fetch
 
    Fetch Wiki markdown from MediaWiki
@@ -1703,6 +1703,31 @@ module.exports = request;
 },{"cross-fetch":1}],5:[function(_dereq_,module,exports){
 "use strict";
 
+/* FILE: /src/_fetch/_title2url
+   function that converts a title from domain Wikipedia, Wikiversity, .... and
+   a specific language "lang" and a domain "wikipedia", "wikiversity" into
+   an URL that displays the source e.g.
+   https://en.wikiversity.org/wiki/Swarm_intelligence
+   default language is: "en"
+   default domain is: "wikipedia"
+*/
+var title2url = function title2url(title, lang, domain) {
+  // set default values for parameters
+  title = title || "Main Page";
+  domain = domain || "wikipedia";
+  lang = lang || "en"; // replace blank to underscore
+
+  title = title.replace(/ /g, '_');
+  title = encodeURIComponent(title);
+  var url = "https://".concat(lang, ".").concat(domain, ".org/wiki/").concat(title, "}");
+  return url;
+};
+
+module.exports = title2url;
+
+},{}],6:[function(_dereq_,module,exports){
+"use strict";
+
 var site_map = _dereq_('../_data/site_map');
 
 var isUrl = /^https?:\/\//;
@@ -1804,7 +1829,7 @@ var makeUrl = {
 };
 module.exports = makeUrl;
 
-},{"../_data/site_map":2}],6:[function(_dereq_,module,exports){
+},{"../_data/site_map":2}],7:[function(_dereq_,module,exports){
 "use strict";
 
 var request = _dereq_('./_request');
@@ -1891,7 +1916,7 @@ var getCategories = function getCategories(cat, a, b, c, d) {
 
 module.exports = getCategories;
 
-},{"./_params":3,"./_request":4,"./_url":5}],7:[function(_dereq_,module,exports){
+},{"./_params":3,"./_request":4,"./_url":6}],8:[function(_dereq_,module,exports){
 "use strict";
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -1902,7 +1927,9 @@ var request = _dereq_('./_request'); //const makeUrl = require('./_url');
 
 var makeUrl = _dereq_('./_url').title;
 
-var getParams = _dereq_('./_params'); //num pages per request
+var getParams = _dereq_('./_params');
+
+var title2url = _dereq_('./_title2url'); //num pages per request
 
 
 var MAX_PAGES = 5; // this data-format from mediawiki api is nutso
@@ -1927,6 +1954,7 @@ var postProcess = function postProcess(data, lang, domain) {
     var wikipage = {
       wiki: text,
       title: page.title,
+      url: title2url(page.title),
       lang: lang,
       domain: domain,
       pageID: page.pageid
@@ -2021,7 +2049,7 @@ var fetchPage = function fetchPage() {
 
 module.exports = fetchPage;
 
-},{"./_params":3,"./_request":4,"./_url":5}],8:[function(_dereq_,module,exports){
+},{"./_params":3,"./_request":4,"./_title2url":5,"./_url":6}],9:[function(_dereq_,module,exports){
 "use strict";
 
 var request = _dereq_('./_request');
@@ -2084,12 +2112,12 @@ var getRandom = function getRandom(a, b, c, d) {
 
 module.exports = getRandom;
 
-},{"./_params":3,"./_request":4,"./_url":5}],9:[function(_dereq_,module,exports){
+},{"./_params":3,"./_request":4,"./_url":6}],10:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = '1.8.0';
+module.exports = '1.9.0';
 
-},{}],10:[function(_dereq_,module,exports){
+},{}],11:[function(_dereq_,module,exports){
 "use strict";
 
 var fetch = _dereq_('./_fetch/fetch');
@@ -2133,5 +2161,5 @@ wtf.getPage = function (title, lang, domain, options, cb) {
 wtf.version = version;
 module.exports = wtf;
 
-},{"./_fetch/category":6,"./_fetch/fetch":7,"./_fetch/random":8,"./_version":9}]},{},[10])(10)
+},{"./_fetch/category":7,"./_fetch/fetch":8,"./_fetch/random":9,"./_version":10}]},{},[11])(11)
 });

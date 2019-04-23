@@ -64,6 +64,7 @@ var wiki_json = {
   "title": "Swarm Intelligence",
   "lang": "en",
   "domain": "wikiversity",
+  "url": "https://en.wikiversity.org/wiki/Swarm_Intelligence",
   "pageid": 2130123
 }
 ```

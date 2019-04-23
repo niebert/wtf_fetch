@@ -3,6 +3,7 @@ const request = require('./_request');
 //const makeUrl = require('./_url');
 const makeUrl = require('./_url').title;
 const getParams = require('./_params');
+const title2url = require('./_title2url');
 
 //num pages per request
 const MAX_PAGES = 5;
@@ -26,6 +27,7 @@ const postProcess = function(data,lang,domain) {
     let wikipage = {
       wiki: text,
       title: page.title,
+      url: title2url(page.title),
       lang: lang,
       domain: domain,
       pageID: page.pageid
