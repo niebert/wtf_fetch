@@ -1,7 +1,7 @@
 {
   "name": "wtf_fetch",
   "description": "Fetch Wiki markdown from MediaWiki",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "author": "Based on Work of Spencer Kelly <spencermountain@gmail.com> ",
   "repository": {
     "type": "git",

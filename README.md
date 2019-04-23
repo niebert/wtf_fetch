@@ -46,7 +46,7 @@ wtf_fetch.getPage('Swarm Intelligence', 'en','wikipedia' function(err, doc) {
 <script>
   //(follows redirect)
   wtf_fetch.getPage('Water', 'en','wikiversity' function(err, doc) {
-    // doc contains the download
+    // doc.wiki contains the download wiki markdown
     console.log(doc.wiki);
   });
 </script>
@@ -55,10 +55,24 @@ wtf_fetch.getPage('Swarm Intelligence', 'en','wikipedia' function(err, doc) {
 # What it does:
 * Downloads Wiki markup source for an article from a MediaWiki of the Wiki Foundation
 * Allows different MediaWiki source, e.g. Wikipedia, Wikiversity, Wikivoyage, ...
-* Create a JSON with of the following format:
+* Creates a JSON with the following format stored as example in variable `wiki_json`:
+```javascript
+var wiki_json = {
+  "wiki": "This is the content of the wiki article in wiki markdown ..."
+  "title": "Swarm Intelligence",
+  "lang": "en",
+  "domain": "wikiversity",
+  "pageid": 2130123
+}
+```
+If you want to access the Wiki markdown of the fetch article, access the `wiki_json.wiki`. The language and domain is stored in the JSON for the article because the attributes are helpful to expand relative links in the wiki to absolute links, that work also after having the document available on a other domain.
 
-## But what about...
+## Processing MediaWiki Markdown
 
+The fetched wiki markdown e.g. from Wikipedia is in general processed within the browser or in the NodeJS application.
+
+### wtf_wikipedia
+The primary library for further processing is `wtf_wikipedia` by Spencer Kelly (see [wtf_wikipedia](https://www.github.com/spencermountain/wtf_wikipedia) ).
 
 ### wiky.js - wiki2html.js
 [wiky.js](https://github.com/tanin47/wiky.js) [wiki2html](https://github.com/brechtbilliet/wiki2html) are simple libraries that convert sources from a MediaWiki to HTML. With these converters you can start with, to learn about parsing a wiki source document downloaded from a MediaWiki.
@@ -130,7 +144,7 @@ the fetch method follows redirects.
 if you're scripting this from the shell, or from another language, install with a `-g`, and then run:
 
 ```shell
-$ wtf_fetch George Clooney --wiki
+$ node ./bin/wtf_fetch George Clooney --wiki
 # George Timothy Clooney (born May 6, 1961) is an American actor ...
 
 $ wtf_fetch Toronto Blue Jays - json
