@@ -103,6 +103,7 @@ The callback or promise will get a JSON of the following type that contains the 
   "title": "My Wikipedia Title",
   "lang": "en",
   "domain": "wikpedia",
+  "url": "https://en.wikipedia.org/wiki/My_Wikipedia_Title",
   "pageid": 12345  
 }
 ```
