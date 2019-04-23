@@ -94,13 +94,14 @@ but getting structured data out of the Wiki source go ahead with Spencer Kelly l
 * **wtf_fetch.getPage(title, [lang], [domain], [options], [callback])**
 
 ### outputs:
-A hash with the content
+The callback or promise will get a JSON of the following type that contains the markdown content in the `wiki` property of the returned JSON:
 ```json
 {
-  "wiki": "This is the source as wiki markdown",
-  "options":{
-    "pageid"
-  }
+  "wiki": "This is the fetched markdown source of the article ...",
+  "title": "My Wikipedia Title",
+  "lang": "en",
+  "domain": "wikpedia",
+  "pageid": 12345  
 }
 ```
 
