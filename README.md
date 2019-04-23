@@ -41,6 +41,7 @@ wtf_fetch.getPage('Swarm Intelligence', 'en','wikipedia' function(err, doc) {
 });
 ```
 ***on the client-side:***
+You can use the unpkg source of `wtf_fetch` with a script tag or just add the build of `wtf_fetch.js` or the compressed `wtf_fetch.min.js` from the repository directly.
 ```html
 <script src="https://unpkg.com/wtf_fetch@latest/builds/wtf_fetch.min.js"></script>
 <script>
@@ -129,14 +130,18 @@ to call non-english wikipedia apis, add [it's language-name](http://en.wikipedia
 
 ```javascript
 wtf_fetch.getPage('Toronto', 'de', 'wikipedia', function(err, doc) {
-  doc.plaintext();
+  console.log("Wiki JSON fetch from https://" + doc.lang + "." + doc.domain + ".org/wiki/" + doc.title + "\n"+ JSON.stringify(doc,null,4));
   //Toronto ist mit 2,6 Millionen Einwohnern..
 });
 ```
 you may also pass the wikipedia page id as parameter instead of the page title:
 
 ```javascript
-wtf_fetch.getPage(64646, 'de', 'wikipedia').then(console.log).catch(console.log)
+wtf_fetch.getPage(64646, 'de', 'wikipedia', function(err, doc) {
+  console.log("Wiki JSON\n"+JSON.stringify(doc,null,4));
+  //Toronto ist mit 2,6 Millionen Einwohnern..
+});
+
 ```
 the fetch method follows redirects.
 
@@ -144,11 +149,10 @@ the fetch method follows redirects.
 if you're scripting this from the shell, or from another language, install with a `-g`, and then run:
 
 ```shell
-$ node ./bin/wtf_fetch George Clooney --wiki
+$ node ./bin/wtf_fetch.js George Clooney de wikipedia
 # George Timothy Clooney (born May 6, 1961) is an American actor ...
 
-$ wtf_fetch Toronto Blue Jays - json
-# {text:[...], infobox:{}, categories:[...], images:[] }
+$ node ./bin/wtf_fetch.js 'Toronto Blue Jays' en wikipedia
 ```
 Command Line Interface was not implement so far.
 
