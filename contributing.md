@@ -1,4 +1,4 @@
-Pull requests are always welcome and respected. Cosmetic code things are not blockers.
+Pull requests are always welcome and respected. Cosmetic code things are never blockers.
 
 Please open an issue to ask questions before making a big PR, that changes behaviour or adds new features.
 

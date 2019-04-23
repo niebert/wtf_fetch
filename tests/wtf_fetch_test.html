@@ -3,18 +3,46 @@
   <head>
     <title>wtf_fetch</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script src="../builds/wtf_fetch.js"></script>
+    <!--
+    <script src="../../wtf_wikipedia_kelly/builds/wtf_wikipedia.js"></script>
     <script src="js/writedom.js"></script>
+    -->
+    <script src="../builds/wtf_fetch.js"></script>
   </head>
   <body style="margin:10px;background:#C0C0C0">
     <script>
-    if (wtf_fetch) {
-      if (wtf_fetch.version) {
+    // check if wtf_fetch is accessible in browser
+    if (window.hasOwnProperty("wtf_fetch")) {
+        if (wtf_fetch.version) {
         console.log("VERSION: wtf_fetch "+wtf_fetch.version);
+        for (var id in wtf_fetch) {
+          if (wtf_fetch.hasOwnProperty(id)) {
+            console.log(" wtf_fetch." + id + " type: "+typeof(wtf_fetch[id]));
+          }
+        };
+        top.wtf_fetch.getPage = function (pArticle, pLang, pDomain, pCallBack) {
+            wtf_fetch.fetch(pArticle,pLang+pDomain,pCallBack);
+        }
+
       };
       //var vWikiConvert = new WikiConvert();
     } else {
-      console.log("wtf_fetch does not exist");
+      console.log("Module 'wtf_fetch' does not exist or was not loaded!");
+    }
+
+    // check if wtf is accessible in browser
+    if (window.hasOwnProperty("wtf")) {
+      if (wtf.version) {
+        console.log("VERSION: wtf "+wtf.version);
+        top.wtf_fetch = wtf;
+        //top.wtf_fetch.getPage = wtf.fetch;
+        top.wtf_fetch.getPage = function (pArticle, pLang, pDomain, pCallBack) {
+            //wtf.fetch(pArticle,pLang+pDomain,pCallBack);
+        }
+      };
+      //var vWikiConvert = new WikiConvert();
+    } else {
+      console.log("Module 'wtf' does not exist or was not loaded!");
     }
       function el(pID) {
         return document.getElementById(pID)
@@ -35,19 +63,32 @@
       };
 
       function downloadWikiDoc(pArticle,pLang,pDomain) {
+        console.log("Call: wtf_fetch.getPage('" + pArticle + "','" + pLang + "','" + pDomain + "')");
         wtf_fetch.getPage(pArticle, pLang, pDomain, function(err, doc){// Callback function after success
-
-          var markup = doc.wiki;
-          console.log("LOG (PlainText result): "+markup);
-          // store markup result in textarea
-          document.getElementById("wikimarkup").value = doc.wiki;
-          // store revealJS result in textarea
-          var markup = doc.wiki;
-          var vTitle = el("wikiarticle").value;
-          var vLanguage = el("sWikiLanguage").value;
-          var vDomain = el("sWikiDomain").value;
-          // store JSON parse result in textarea
-          document.getElementById("wikijson").value = JSON.stringify(doc,null,4);
+        //wtf.fetch("Water", "en" , function(err, doc){// Callback function after success
+          if (err) {
+            console.error("Error wtf_fetch: "+err);
+          } else {
+            if (doc) {
+              if (doc.hasOwnProperty("wiki")) {
+                var markup = doc.wiki;
+                console.log("LOG (PlainText result): "+markup);
+                // store markup result in textarea
+                document.getElementById("wikimarkup").value = doc.wiki;
+                // store revealJS result in textarea
+                var markup = doc.wiki;
+                var vTitle = el("wikiarticle").value;
+                var vLanguage = el("sWikiLanguage").value;
+                var vDomain = el("sWikiDomain").value;
+                // store JSON parse result in textarea
+                document.getElementById("wikijson").value = JSON.stringify(doc,null,4);
+              } else {
+                console.log("JSON doc="+JSON.stringify(doc,null,2));
+              }
+            } else {
+              console.error("Return 'doc' in getPage()-callback is not defined!");
+            }
+          }
 
         })
       }
@@ -124,11 +165,11 @@
     <input type="button" id="bDownloadWiki" value="Download" onclick="callWikiDownload()">
     <input type="text" id="wikiid" value="enwikiversity" style="display:none">
     <hr>
-    <b>Download Wiki-Markup:</b></br>
+    <b>Download Wiki-Markup:</b><br>
     <textarea id="wikimarkup" rows="12" cols="120">
     </textarea>
     <hr>
-    <b>Wiki JSON:</b></br>
+    <b>Wiki JSON:</b><br>
     <textarea id="wikijson" rows="12" cols="120">
     </textarea>
     <hr>
