@@ -130,8 +130,10 @@ to call non-english wikipedia apis, add [it's language-name](http://en.wikipedia
 
 ```javascript
 wtf_fetch.getPage('Toronto', 'de', 'wikipedia', function(err, doc) {
-  console.log("Wiki JSON fetch from https://" + doc.lang + "." + doc.domain + ".org/wiki/" + doc.title + "\n"+ JSON.stringify(doc,null,4));
-  //Toronto ist mit 2,6 Millionen Einwohnern..
+  var url = "https://" + doc.lang + "." + doc.domain + ".org";
+  console.log("Wiki JSON fetched from '" +
+       url + "/wiki/" + doc.title + "'\n" + JSON.stringify(doc,null,4));
+  //doc.wiki = "Toronto ist mit 2,6 Millionen Einwohnern..."
 });
 ```
 you may also pass the wikipedia page id as parameter instead of the page title:
@@ -139,7 +141,6 @@ you may also pass the wikipedia page id as parameter instead of the page title:
 ```javascript
 wtf_fetch.getPage(64646, 'de', 'wikipedia', function(err, doc) {
   console.log("Wiki JSON\n"+JSON.stringify(doc,null,4));
-  //Toronto ist mit 2,6 Millionen Einwohnern..
 });
 
 ```
@@ -211,7 +212,7 @@ Some important information to support Office Documents in the future
 
 # Acknowledgement
 This library extracted the `fetch` method from `wtf_wikipedia`. The complete code was developed by Spencer Kelly. `wtf_fetch` itself is based on
- [cross-fetch](https://github.com/lquixada/cross-fetch) which allows fetch the markdown of articles from Wikipedia, Wikiversity even from a local HTML file. This is great because you can fetch an article and process the article in a browser without the need to perform processing on a remot server. The library [jshashes](https://github.com/h2non/jshashes) was required as a lightweight library implementing the most extended cryptographic hash function algorithms in pure JavaScript. Special thanks to Spencer Kelly for creating and maintaining [wtf_wikipedia](https://github.com/spencermountain/wtf_wikipedia). A great contribution to the OpenSource community especially for using Wiki content in as [Open Educational Resources](https://en.wikiversity.org/wiki/Open_Educational_Resources).
+ [cross-fetch](https://github.com/lquixada/cross-fetch) which allows fetch the markdown of articles from Wikipedia, Wikiversity even from a local HTML file. This is great because you can fetch an article and process the article in a browser without the need to perform processing on a remot server. The library [jshashes](https://github.com/h2non/jshashes) was required as a lightweight library implementing the most extended cryptographic hash function algorithms in pure JavaScript. Special thanks to Spencer Kelly for creating and maintaining [wtf_wikipedia](https://github.com/spencermountain/wtf_wikipedia). A great contribution to the OpenSource community especially for using Wiki content as [Open Educational Resources](https://en.wikiversity.org/wiki/Open_Educational_Resources).
 
 See also:
 * [instaview](https://en.wikipedia.org/wiki/User:Pilaf/InstaView)
