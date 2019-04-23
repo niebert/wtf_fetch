@@ -10,12 +10,13 @@ The following [wtf_fetch-demo](https://niebert.github.io/wtf_fetch) is HTML-page
 * Provides a `Display Source` button to show the current source file in the MediaWiki of Wikiversity or Wikipedia.
 * The download appends a source info at very end of the downloaded Wiki source, to create a reference in the text (like a citation - see function `append_source_info()`)
 :: <font size="+2">[Demo wtf_fetch](https://niebert.github.io/wtf_fetch)</font>
+* [Wikipedia2Wikiversity](https://niebert.github.io/Wikipedia2Wikiversity) uses `wtf_fetch` to download the Wikipedia markdown source into a textarea of an HTML file. The Wiki markdown source is processed and so that interwiki links from Wikiversity to Wikipedia work. [Wikipedia2Wikiversity](https://niebert.github.io/Wikipedia2Wikiversity) is also a demonstrator of an [AppLSAC-0](https://en.wikiversity.org/wiki/AppLSAC).
 
 ## See also
 The following repositories are related to `wtf_fetch`:  
-* [Wikipedia2Wikiversity](https://niebert.github.io/Wikipedia2Wikiversity) that uses `wtf_fetch` to download Wikipedia sources and convert the links for application in Wikiversity.
 * [`wtf_wikipedia`](https://github.com/spencermountain/wtf_wikipedia/) is the source repository developed by Spencer Kelly, who created that great library for Wikipedia article processing.
 * [Wiki2Reveal](https://niebert.github.io/Wiki2Reveal) that uses `wtf_fetch` and `wtf_wikipedia` to download Wikipedia sources and convert the wiki sources "on-the-fly" into a RevealJS presentation.
+* [Wikipedia2Wikiversity](https://niebert.github.io/Wikipedia2Wikiversity) that uses `wtf_fetch` to download Wikipedia sources and convert the links for application in Wikiversity.
 
 
 ## Decomposition of `wtf_wikipedia` in submodules
