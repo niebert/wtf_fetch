@@ -216,9 +216,11 @@ Some important information to support Office Documents in the future
 
 # Acknowledgement
 This library extracted the `fetch` method from `wtf_wikipedia`. The complete code was developed by Spencer Kelly. `wtf_fetch` itself is based on
- [cross-fetch](https://github.com/lquixada/cross-fetch) which allows fetch the markdown of articles from Wikipedia, Wikiversity even from a local HTML file. This is great because you can fetch an article and process the article in a browser without the need to perform processing on a remot server. The library [jshashes](https://github.com/h2non/jshashes) was required as a lightweight library implementing the most extended cryptographic hash function algorithms in pure JavaScript. Special thanks to Spencer Kelly for creating and maintaining [wtf_wikipedia](https://github.com/spencermountain/wtf_wikipedia). A great contribution to the OpenSource community especially for using Wiki content as [Open Educational Resources](https://en.wikiversity.org/wiki/Open_Educational_Resources).
+ [cross-fetch](https://github.com/lquixada/cross-fetch) which allows fetching the markdown of articles from Wikipedia, Wikiversity even from a local HTML file, that imports the `builds/wtf_fetch.js`. This is great because you can fetch an article from Wikipedia and process the article within a browser without the need to perform processing on a remote server. The library [jshashes](https://github.com/h2non/jshashes) was required as a lightweight library implementing the most extended cryptographic hash function algorithms in pure JavaScript. Special thanks to Spencer Kelly for creating and maintaining [wtf_wikipedia](https://github.com/spencermountain/wtf_wikipedia). A great contribution to the OpenSource community especially for using Wiki content as [Open Educational Resources](https://en.wikiversity.org/wiki/Open_Educational_Resources).
 
 See also:
+* [`wtf_wikipedia`](https://github.com/spencermountain/wtf_wikipedia)
+* [`wtf_tokenizer`](https://github.com/niebert/wtf_tokenizer)
 * [instaview](https://en.wikipedia.org/wiki/User:Pilaf/InstaView)
 * [txtwiki](https://github.com/joaomsa/txtwiki.js)
 * [Parsoid](https://www.mediawiki.org/wiki/Parsoid)
