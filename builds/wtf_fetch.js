@@ -1,4 +1,4 @@
-/* wtf_fetch v2.0.0
+/* wtf_fetch v2.0.1
    github.com/niebert/wtf_fetch
 
    Fetch Wiki markdown from MediaWiki
@@ -2115,7 +2115,7 @@ module.exports = getRandom;
 },{"./_params":3,"./_request":4,"./_url":6}],10:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = '2.0.0';
+module.exports = '2.0.1';
 
 },{}],11:[function(_dereq_,module,exports){
 "use strict";
