@@ -42,9 +42,12 @@ wtf_fetch.getPage('Swarm Intelligence', 'en','wikipedia' function(err, doc) {
 });
 ```
 ***on the client-side:***
-You can use the unpkg source of `wtf_fetch` with a script tag or just add the build of `wtf_fetch.js` or the compressed `wtf_fetch.min.js` from the repository directly.
-```html
-<script src="https://unpkg.com/wtf_fetch@latest/builds/wtf_fetch.min.js"></script>
+You can use the source library of `wtf_fetch` 
+* with a script tag for testing or just add the build of `wtf_fetch.js` or 
+* just view the library [`wtf_fetch.js`](https://niebert.github.io/js/wtf_fetch.js) and save the library to your local HTML project or
+* get the library by cloning the `wtf_fetch.js` repository with `git clone https://github.com/niebert/wtf_fetch.git` from the command line.
+```html 
+<script src="https://niebert.github.io/js/wtf_fetch.js"></script>
 <script>
   //(follows redirect)
   wtf_fetch.getPage('Water', 'en','wikiversity' function(err, doc) {
