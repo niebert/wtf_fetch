@@ -8,7 +8,7 @@
 The following [wtf_fetch-demo](https://niebert.github.io/wtf_fetch) is HTML-page, that imports the library `wtf_fetch.js` and
 * uses HTML-form elements to determine the Wikipedia article and the domain from which the article should be download.
 * Provides a `Display Source` button to show the current source file in the MediaWiki of Wikiversity or Wikipedia.
-* The download appends a source info at very end of the downloaded Wiki source, to create a reference in the text (like a citation - see function `append_source_info()`)
+* The download (`wtf_fetch`) appends a source info at the very end of the downloaded Wiki source, to create a reference in the text to the source. This workflow is similar to a citation in scientific article - see function `append_source_info()`)
 :: <font size="+2">[Demo wtf_fetch](https://niebert.github.io/wtf_fetch)</font>
 * [Wikipedia2Wikiversity](https://niebert.github.io/Wikipedia2Wikiversity) uses `wtf_fetch` to download the Wikipedia markdown source into a textarea of an HTML file. The Wiki markdown source is processed and so that interwiki links from Wikiversity to Wikipedia work. [Wikipedia2Wikiversity](https://niebert.github.io/Wikipedia2Wikiversity) is also a demonstrator of an [AppLSAC-0](https://en.wikiversity.org/wiki/AppLSAC).
 
