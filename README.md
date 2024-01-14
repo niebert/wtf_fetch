@@ -2,7 +2,7 @@
 ## wtf_fetch - submodule of `wtf_wikipedia`
 `wtf_fetch` is submodule of wikipedia markup parser `wtf_wikipedia` developed by <a href="https://spencermountain.github.io/">Spencer Kelly</a> and <a href="https://github.com/spencermountain/wtf_wikipedia/graphs/contributors"> contributors </a>
 
-`wtf_wikipedia` turns wikipedia's markup language into `JSON`, so extracting the content of a MediaWiki source as JSON data by parsing the wiki markup.
+[`wtf_wikipedia`](https://github.com/spencermountain/wtf_wikipedia) turns wikipedia's markup language into `JSON`, so the library performs in addition to fetching also the extraction of content of a MediaWiki source and provides by parsing of the source a structured JSON data representing the wiki markup source.
 
 ## Demo HTML5-Application of `wtf_fetch`
 The following [wtf_fetch-demo](https://niebert.github.io/wtf_fetch) is HTML-page, that imports the library `wtf_fetch.js` and
